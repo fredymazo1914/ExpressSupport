@@ -1,33 +1,35 @@
-﻿@model IEnumerable<ShoppingStore_DlloSat.DAL.Entities.Country>
+﻿@model IEnumerable<ExpressSupport.DAL.Entities.CategorySoftware>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Países</h1>
+<h1>Categoría</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-primary">Crear nuevo país</a>
+    <a asp-action="Create" class="btn btn-outline-primary">Crear una nueva categoría</a>
 </p>
 
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Países</h3>
             </div>
             <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="CountryTable">
+                <table class="table table-hover table-responsive table-striped" id="CategorySoftwareTable">
                     <thead>
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Name)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.CreatedDate)    
+                                @Html.DisplayNameFor(model => model.Description)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.ModifieDate)
+                                @Html.DisplayNameFor(model => model.CreateDate)    
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
                             </th>
                             <th></th
                         </tr>
@@ -40,10 +42,13 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.CreateDate)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ModifieDate)
+                                    @Html.DisplayFor(modelItem => item.ModifiedDate)
                                 </td>
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
@@ -67,16 +72,15 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#CountryTable').DateTable({
+            $('#CategorySoftWareTable').DateTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
                 "aLengthMenu": [
-                    [2, 5, 25, 50, 100, 200, -1],
-                    [2, 5, 25, 50, 100, 200, "Todos"]
+                    [5, 25, 50, 100, 200, -1],
+                    [5, 25, 50, 100, 200, "Todos"]
                 ]
             });
         });
      </script>
 }
-

@@ -9,7 +9,8 @@ namespace ExpressSupport.DAL.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        [Display(Name = "Descripción")]
+        public string? Description { get; set; }
 
     }
 }

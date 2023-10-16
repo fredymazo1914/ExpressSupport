@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpressSupport.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20231015190627_NewTableCategoriesSoftware")]
+    [Migration("20231016042831_NewTableCategoriesSoftware")]
     partial class NewTableCategoriesSoftware
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace ExpressSupport.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
