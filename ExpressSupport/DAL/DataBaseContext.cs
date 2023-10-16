@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ExpressSupport.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpressSupport.DAL
 {
@@ -8,13 +9,16 @@ namespace ExpressSupport.DAL
         //de la BD, como por ejemplo usar SQL Server y usar la cadena de conexión a la BD
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
-            
         }
+
+        public DbSet<CategorySoftware> CategoriesSoftware { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+            modelBuilder.Entity<CategorySoftware>().HasIndex(c => c.Name).IsUnique();
+
+
             //Con esta línea se controla la duplicidad de la tabla Country
             //modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
         }
