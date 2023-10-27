@@ -63,6 +63,109 @@ namespace ExpressSupport.Controllers
             return View(categorySoftware);
         }
 
+        // GET: CategoriesSoftware/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null || _context.CategoriesSoftware == null)
+            {
+                return NotFound();
+            }
+
+            var categorySoftware = await _context.CategoriesSoftware.FindAsync(id);
+            if (categorySoftware == null)
+            {
+                return NotFound();
+            }
+            return View(categorySoftware);
+        }
+
+        // POST: CategoriesSoftware/Edit/5
+        [HttpPut]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id,CreateDate,ModifieDate")] CategorySoftware categorySoftware)
+        {
+            if (id != categorySoftware.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    categorySoftware.ModifiedDate = DateTime.Now;//Se automatiza la fecha de moficación de la tabla Countries
+                    _context.Update(categorySoftware);//Método Update() actualiza obj en BD
+                    await _context.SaveChangesAsync();//Aquí se hace el update en BD
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    //if (!CountryExists(country.Id))
+                    if (!CategorySoftwareExists(categorySoftware.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre");
+                    }
+                }
+
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(categorySoftware);
+        }
+
+        // GET: CategoriesSoftware/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null || _context.CategoriesSoftware == null)
+            {
+                return NotFound();
+            }
+
+            var categorySoftware = await _context.CategoriesSoftware
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (categorySoftware == null)
+            {
+                return NotFound();
+            }
+
+            return View(categorySoftware);
+        }
+
+        // POST: CategoriesSoftware/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            if (_context.CategoriesSoftware == null)
+            {
+                return Problem("Entity set 'DataBaseContext.CategoriesSoftware'  is null.");
+            }
+            var categorySoftware = await _context.CategoriesSoftware.FindAsync(id);
+            if (categorySoftware != null)
+            {
+                _context.CategoriesSoftware.Remove(categorySoftware);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        private bool CategorySoftwareExists(Guid id)
+        {
+            return (_context.CategoriesSoftware?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
     }
 }
 
